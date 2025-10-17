@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Card - Stage 0</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #66eab7 0%, #4ba27e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        article[data-testid="test-profile-card"] {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-layout {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .card-layout {
+                flex-direction: row;
+            }
+        }
+
+        .card-sidebar {
+            background: linear-gradient(180deg, #66eab3 0%, #4ba272 100%);
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .card-sidebar {
+                width: 320px;
+                flex-shrink: 0;
+            }
+        }
+
+        figure {
+            margin-bottom: 20px;
+        }
+
+        img[data-testid="test-user-avatar"] {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            color: white;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            word-wrap: break-word;
+        }
+
+        .time-display {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 12px;
+            word-break: break-all;
+        }
+
+        .card-content {
+            padding: 40px 30px;
+            flex: 1;
+        }
+
+        .bio-section {
+            margin-bottom: 30px;
+        }
+
+        .bio-section h2 {
+            font-size: 16px;
+            color: #66ea9d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        p[data-testid="test-user-bio"] {
+            color: #4a6851;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        nav[data-testid="test-user-social-links"] {
+            margin-bottom: 30px;
+        }
+
+        nav h2 {
+            font-size: 16px;
+            color: #66ea87;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            list-style: none;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            background: #f7fafc;
+            color: #4a684e;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .social-links a:hover {
+            background: #66ea6d;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 234, 142, 0.4);
+        }
+
+        .social-links a:focus {
+            outline: 2px solid #66ea8e;
+            outline-offset: 2px;
+        }
+
+        .lists-container {
+            display: grid;
+            gap: 30px;
+        }
+
+        @media (min-width: 640px) {
+            .lists-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        section h2 {
+            font-size: 16px;
+            color: #66ea78;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        ul[data-testid="test-user-hobbies"],
+        ul[data-testid="test-user-dislikes"] {
+            list-style: none;
+        }
+
+        ul[data-testid="test-user-hobbies"] li,
+        ul[data-testid="test-user-dislikes"] li {
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            background: #f7fafc;
+            border-left: 3px solid #cfbd15;
+            border-radius: 4px;
+            color: #68684a;
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+
+        ul[data-testid="test-user-dislikes"] li {
+            border-left-color: #f56565;
+        }
+
+        @media (max-width: 767px) {
+            .card-content {
+                padding: 30px 20px;
+            }
+
+            .card-sidebar {
+                padding: 30px 20px;
+            }
+
+            img[data-testid="test-user-avatar"] {
+                width: 120px;
+                height: 120px;
+            }
+
+            header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <article data-testid="test-profile-card">
+        <div class="card-layout">
+            <aside class="card-sidebar">
+                <figure>
+                    <img 
+                        src="img/csay.png" 
+                        alt="Profile photo of John Doe" 
+                        data-testid="test-user-avatar"
+                    >
+                </figure>
+                
+                <header>
+                    <h1 data-testid="test-user-name">Patrick Ubong</h1>
+                </header>
+                
+                <div class="time-display" data-testid="test-user-time" aria-live="polite"></div>
+            </aside>
+
+            <main class="card-content">
+                <section class="bio-section">
+                    <h2>About Me</h2>
+                    <p data-testid="test-user-bio">
+                        Passionate software developer with a love for creating elegant solutions to complex problems. 
+                        I believe in writing clean, maintainable code and contributing to open-source projects. 
+                        When I'm not coding, you'll find me exploring new technologies or enjoying the great outdoors.
+                    </p>
+                </section>
+
+                <nav data-testid="test-user-social-links" aria-label="Social media links">
+                    <h2>Connect With Me</h2>
+                    <ul class="social-links">
+                        <li>
+                            <a 
+                                href="https://twitter.com/iampatrickubong" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                data-testid="test-user-social-twitter"
+                            >
+                                🐦 Twitter
+                            </a>
+                        </li>
+                        <li>
+                            <a 
+                                href="https://github.com/bougzy" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                data-testid="test-user-social-github"
+                            >
+                                💻 GitHub
+                            </a>
+                        </li>
+                        <li>
+                            <a 
+                                href="https://www.linkedin.com/in/patrick-ubong" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                data-testid="test-user-social-linkedin"
+                            >
+                                💼 LinkedIn
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="lists-container">
+                    <section>
+                        <h2>Hobbies & Interests</h2>
+                        <ul data-testid="test-user-hobbies">
+                            <li>🎸 Playing guitar and creating music</li>
+                            <li>📚 Reading sci-fi novels and tech blogs</li>
+                            <li>🏃 Running and staying active</li>
+                            <li>🎮 Gaming and game development</li>
+                            <li>✈️ Traveling and exploring new cultures</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Dislikes</h2>
+                        <ul data-testid="test-user-dislikes">
+                            <li>❌ Poorly documented code</li>
+                            <li>🐛 Unhandled errors and bugs</li>
+                            <li>⏰ Unnecessary meetings</li>
+                            <li>☕ Cold coffee</li>
+                            <li>🚫 Code without tests</li>
+                        </ul>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </article>
+
+    <script>
+        function updateTime() {
+            const timeElement = document.querySelector('[data-testid="test-user-time"]');
+            if (timeElement) {
+                timeElement.textContent = Date.now();
+            }
+        }
+
+        // Initialize time immediately
+        updateTime();
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 A testable, accessible, and responsive profile card component built with semantic HTML, modern CSS, and vanilla JavaScript.
 
  Live Demo
-[Your Netlify/GitHub Pages URL here]
+https://profile-card-eight-rust.vercel.app
 
  Features
 - ✅ All required data-testid attributes
